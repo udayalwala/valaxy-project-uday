@@ -1,0 +1,7 @@
+all the files are stored inside /opt/docker
+creating user ansadmin user and  is added to docker group
+changing permsission to the folder /opt/docker to ansadmin user
+sudo chown -R ansadmin:ansadmin /opt/docker
+ansible will create the docker images on ansible host and publish it to docker host orelse any target server
+ssh is established between ansadmin user and localhost so that it will save images on ansible host
+ssh-copy-id localhost
