@@ -1,0 +1,14 @@
+---
+- hosts: all
+  tasks:
+   - name: create docker image using war file
+     command: docker build -t simple-image:latest .
+     args:
+      chdir: /opt/docker
+   - name: create tag to the image
+     command: docker tag simple-image udaimoto/simple-image
+   - name: push image into docker hub
+     command: docker push udaimoto/simple-image
+   - name: remove docker image from the ansible server
+     command: docker rmi simple-image udaimoto/simple-image
+     ignore_errors: yes

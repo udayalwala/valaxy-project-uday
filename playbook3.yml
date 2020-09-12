@@ -1,0 +1,17 @@
+---
+- hosts: all
+  tasks:
+   - name: stop current running container
+     command: docker stop simple-container
+     ignore_errors: yes
+   - name: remove stopped containers
+     command: docker rm simple-container
+     ignore_errors: yes
+   - name: remove docker images
+     command: docker rmi udaimoto/simple-image:latest
+     ignore_errors: yes
+   - name: pull docker image from docker hub
+     command: docker pull udaimoto/simple-image
+   - name: create container using above created image
+     command: docker run -d --name simple-container -p 8080:8080 udaimoto/simple-image
+

@@ -1,0 +1,10 @@
+- hosts: all
+  tasks:
+   - name: build docker image using war file
+     command: docker build -t simple-image .
+     args:
+      chdir: /opt/docker
+   - name: create container using above created image
+     command: docker run -d --name simple-container -p 8080:8080 simple-image
+
+# in thee above if the jenkins build the job second war file will generated and creating a container is not possible it shows container already exists...if we want to create the container then previous container with same name i.e., simple-container will be deleted
