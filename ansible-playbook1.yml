@@ -1,0 +1,12 @@
+---
+- name: creating files on all the machines
+  hosts: all
+  tasks:
+   - name: create files
+     file:
+      name: /home/ansadmin/file1
+      state: touch
+   - name: create directory
+     file:
+      name: /home/ansadmin/dir1
+      state: directory

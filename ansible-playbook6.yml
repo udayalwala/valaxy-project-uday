@@ -1,0 +1,37 @@
+--- 
+- name: setup tomcat in redhat and debian distributions
+  hosts: all
+  tasks:
+   - name: install java on redhat versions
+     yum:
+      name: java
+      state: installed
+     when: ansible_os_family == "RedHat"
+
+   - name: install java on debian versions
+     apt:
+      name: default-jdk
+      state: present
+     when: ansible_os_family == "Debian"
+
+   - name: download tomcat packages
+     get_url:
+      url: https://mirrors.estointernet.in/apache/tomcat/tomcat-8/v8.5.57/bin/apache-tomcat-8.5.57.tar.gz
+      dest: /opt
+
+   - name: unarchieve the file
+     unarchive:
+      src: /opt/apache-tomcat-8.5.57.tar.gz
+      dest: /opt
+      remote_src: True
+
+   - name: add execute permissions on startup.sh
+     file:
+      path: /opt/apache-tomcat-8.5.57/bin/startup.sh
+      state: touch
+      mode: 0777
+
+   - name: start the tomcat
+     shell: nohup ./startup.sh
+     args:
+      chdir: /opt/apache-tomcat-8.5.57/bin
